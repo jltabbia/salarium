@@ -1,0 +1,241 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block contenido %}
+<div class="container text-center">
+    <div class="card mt-5 mb-5">
+        <div class='card-body'>
+    <p class="h4 mb-3 mt-3">{{ DESCRIPCION_SITIO }}</p>
+    <p class="h5 mb-3 mt-3">Gestión de Proveedores</p>
+    <input type="hidden" name="con" id="con" value='{{ emp.id}}'>
+        </div>
+    </div>
+
+</div>
+<div class="container">
+        <button type="button" class="btn btn-primary w-10" data-bs-toggle="modal" data-bs-target="#agregarProveedor">
+             Agregar Proveedor
+        </button>
+        <table class="table table-striped table-hover" id="tablaProveedores">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Domicilio</th>
+                    <th scope="col">Provincia</th>
+                    <th scope="col">Localidad</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for proveedor in proveedores %}
+                <tr>
+                    <td>{{ proveedor.id }}</td>
+                    <td>{{ proveedor.nombre }}</td>
+                    <td>{{ proveedor.domicilio }}</td>
+                    <td>{{ proveedor.provincia }}</td>
+                    <td>{{ proveedor.localidad }}</td>
+                    <td>{{ proveedor.email }}</td>
+                    <td>
+                        <a href="{% url 'proveedores:editar' proveedor.id %}" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="{% url 'proveedores:eliminar' proveedor.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+
+</div>
+<div class="card-footer">
+  <div class="container-fluid text-center">
+    <form action="{% url 'index' %}" method="post">
+      {% csrf_token %}
+      <button type='submit' class="btn btn-danger">Cerrar</button>
+    </form>
+  </div>
+    
+  </div>
+</div>
+</div>
+</div>
+
+<!-- Modal Agregar proveedor -->
+
+<div class="modal fade" id="agregarProveedor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: aquamarine;">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Proveedor</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{% url 'proveedores:agregar' %}" method="post">
+            {% csrf_token %}
+        <div class="modal-body">
+          <div class="d-flex">
+            <div class="mb-3 mr-2">
+            <label for="codigo">Código</label>
+            <input type="text" class="form-control" id="codigo" name="codigo">
+            </div>
+          </div>
+          <div class="d-flex">
+            <div class="mb-3 mr-2">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre">
+            </div>
+          </div>
+        <div class="d-flex">
+            <div class="mb-3 mr-2">
+            <label for="domicilio">Domicilio</label>
+            <input type="text" class="form-control" id="domicilio" name="domicilio">
+            </div>
+        </div>
+
+        <div class="d-flex">
+            <div class="mb-3 mr-2">
+            <label for="provincia">Provincia</label>
+            <select class="form-control" id="provincia" name="provincia">
+                {% for provincia in prov %}
+                    <option value="{{ provincia.id }}">{{ provincia.nombre }}</option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="mb-3 mr-2">     
+            <label for="localidad">Localidad</label>
+            <input type="text" class="form-control" id="localidad" name="localidad">        
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="mb-3 mr-2">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" name="email">
+            </div>  
+            
+        </div>
+                </div>
+        <div class="modal-footer" style="background-color: aquamarine;">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+
+
+    </form>
+      </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editarProveedor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: aquamarine;">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Proveedor</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{% url 'proveedores:editar' %}" method="post">
+          {% csrf_token %}
+      <div class="modal-body">
+        <input type="hidden" name="id" id="id">
+        <div class="d-flex">
+          <div class="mb-3 mr-2">
+          <label for="codigo">Código</label>
+          <input type="text" class="form-control" id="cod" name="cod">
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="mb-3 mr-2">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control" id="nom" name="nom">
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="mb-3 mr-2">
+          <label for="basico">Básico</label>
+          <input type="text" class="form-control" id="bas" name="bas">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: aquamarine;">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Eliminar proveedor -->
+<div class="modal fade" id="eliminarProveedor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: aquamarine;">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Proveedor</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{% url 'proveedores:eliminar' %}" method="post">
+          {% csrf_token %}
+      <div class="modal-body">
+        <input type="hidden" name="id1" id="id1">
+        <div class="d-flex">
+          <div class="mb-3 mr-2">
+          <label for="codigo">Código</label>
+          <input type="text" class="form-control" id='cod1' name='cod1' readonly>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="mb-3 mr-2">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control" id='nom1' readonly>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer" style="background-color: aquamarine;">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Eliminar Registro</button>
+      </div>
+  </form>
+    </div>
+  </div>
+  </div>
+
+{% endblock %}
+{% block js %}
+
+<script type="text/javascript">
+  new DataTable('#tablaProveedores')
+
+  $(document).on("click", "#eliminar", function() {
+    var id=$(this).data('id');
+    var nombre=$(this).data('nombre');
+    var codigo=$(this).data('codigo');
+
+    $("#id1").val(id);
+    $("#cod1").val(codigo);
+    $("#nom1").val(nombre);
+  });
+
+  $(document).on("click", "#editar", function() {
+    var id=$(this).data('id');
+    var nombre=$(this).data('nombre');
+    var codigo=$(this).data('codigo');
+    var domicilio=$(this).data('domicilio');
+    var provincia=$(this).data('provincia');
+    var localidad=$(this).data('localidad');
+    var email=$(this).data('email');        
+
+    $("#id").val(id);
+    $("#cod").val(codigo);
+    $("#nom").val(nombre);
+    $("#dom").val(domicilio);
+    $("#prov").val(provincia);
+    $("#loc").val(localidad);
+    $("#email").val(email);
+  });
+
+</script>
+
+{% endblock %}

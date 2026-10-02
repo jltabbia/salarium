@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block contenido %}
+<div class="container text-center">
+    <div class="card mt-5 mb-5">
+        <div class='card-body'>
+    <p class="h2 mb-3 mt-3">{{ DESCRIPCION_SITIO }}</p>
+    <img src="{% static '/img/almacen.png' %}" width="100" class="mb-5"> 
+    <input type="hidden" name="con" id="con" value='{{ emp.id}}'>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block js %}
+{% endblock %}
