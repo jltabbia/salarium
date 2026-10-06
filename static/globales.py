@@ -1,2 +1,3 @@
-TITULO="Commercium"
-DESCRIPCION="Sistema de gestión de Stock, Ventas y Bancos"
+TITULO="Salarium"
+DESCRIPCION="Sistema de Liquidación de Salarios/Haberes" 
+
