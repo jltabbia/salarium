@@ -42,6 +42,7 @@ class AgregarCentroCosto(View):
         
     def post(self,request,*args,**kwargs):
         centrocostos=Centro_costos()
+        centrocostos.id_empresa_id=request.POST.get('emp')  
         centrocostos.codigo=request.POST.get('codigo')
         centrocostos.nombre=request.POST.get('nombre').upper()
         centrocostos.domicilio=request.POST.get('domicilio').upper()
