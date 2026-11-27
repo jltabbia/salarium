@@ -74,7 +74,7 @@ DATABASES = {
     'default': {
        'ENGINE': 'mysql.connector.django', 
        'NAME': 'salarium',            
-       'USER': 'admin',          
+       'USER': 'Admin',          
        'PASSWORD': '@Joselo01',
        'HOST': '127.0.0.1',                 
        'PORT': '3306',
